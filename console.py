@@ -5,6 +5,7 @@ import re
 import models
 from shlex import split
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 from models import *
 
@@ -17,20 +18,19 @@ class HBNBCommand(cmd.Cmd):
         """Create a new instance of BaseModel, save it and print the id"""
         if not arg:
             print("** class name missing **")
-        elif arg not in ["BaseModel"]:
+        elif arg not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         else:
             obj = eval(arg)()
             obj.save()
             print(obj.id)
-            storage.save()
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on the class name and id"""
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -64,11 +64,11 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             obj_list = [str(obj) for obj in storage.all().values()]
             print(obj_list)
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         else:
             obj_cls = obj.__class__.__name__
-            obj_list = [str(obj) for obj in storage.all().values() if obj_cls == "BaseModel"]
+            obj_list = [str(obj) for obj in storage.all().values() if obj_cls == args[0]]
             print(obj_list)
 
     def do_update(self, arg):
@@ -77,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -99,6 +99,7 @@ class HBNBCommand(cmd.Cmd):
                         except:
                             pass
                         setattr(obj, attr_name, attr_value)
+                        obj.save()
             else:
                 print("** no instance is found **")
 
