@@ -3,6 +3,11 @@
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -38,7 +43,8 @@ class FileStorage:
                 obj_dict = json.load(f)
             for key, value in obj_dict.items():
                 cls_name = value["__class__"]
-                cls_dict = {"BaseModel": BaseModel, "User": User}
+                cls_dict = {"BaseModel": BaseModel, "User": User, "State": state
+                        "City": city, "Amenity": amenity, "Place": place, "Review": review}
                 self.__objects[key] = cls_dictclsname
         except FileNotFoundError:
             pass
