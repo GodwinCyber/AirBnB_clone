@@ -43,8 +43,8 @@ class FileStorage:
                 obj_dict = json.load(f)
             for key, value in obj_dict.items():
                 cls_name = value["__class__"]
-                cls_dict = {"BaseModel": BaseModel, "User": User, "State": state
-                        "City": city, "Amenity": amenity, "Place": place, "Review": review}
+                cls_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+                        "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
                 self.__objects[key] = cls_dictclsname
         except FileNotFoundError:
             pass

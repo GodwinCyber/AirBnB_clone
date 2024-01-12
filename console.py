@@ -7,7 +7,12 @@ from shlex import split
 from models.base_model import BaseModel
 from models.user import User
 from models.engine.file_storage import FileStorage
-from models import *
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -18,7 +23,8 @@ class HBNBCommand(cmd.Cmd):
         """Create a new instance of BaseModel, save it and print the id"""
         if not arg:
             print("** class name missing **")
-        elif arg not in ["BaseModel", "User"]:
+        elif arg not in ["BaseModel", "User", "Review", "State", "City",
+                "Place", "Amenity"]:
             print("** class doesn't exist **")
         else:
             obj = eval(arg)()
@@ -30,7 +36,8 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
+        elif args[0] not in ["BaseModel", "User", "Review", "City", "State",
+                "Place", "Amenity"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -47,7 +54,8 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
+        elif args[0] not in ["BaseModel", "User", "City", "Amenity", "Review",
+                "Place", "State"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -64,7 +72,8 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             obj_list = [str(obj) for obj in storage.all().values()]
             print(obj_list)
-        elif args[0] not in ["BaseModel", "User"]:
+        elif args[0] not in ["BaseModel", "User", "State", "City", "Review",
+                "Amenity", "Place"]:
             print("** class doesn't exist **")
         else:
             obj_cls = obj.__class__.__name__
@@ -77,7 +86,8 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
+        elif args[0] not in ["BaseModel", "User", "City", "State", "Amenity",
+                "Review", "Place"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
