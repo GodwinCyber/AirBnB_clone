@@ -17,11 +17,11 @@ class BaseModel:
         self.updated_at = datetime.today()
 
         if kwargs:
-            for k, v in kwargs.items():
-                if k in ["created_at", "updated_at"]:
-                    self.__dict__[k] = datetime.strptime(v, tform)
+            for key, values in kwargs.items():
+                if key in ["created_at", "updated_at"]:
+                    self.__dict__[key] = datetime.strptime(values, tform)
                 else:
-                    self.__dict__[k] = v
+                    self.__dict__[key] = values
         else:
             models.storage.new(self)
 
