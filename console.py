@@ -2,7 +2,7 @@
 """Define the HBNBCommand Class"""
 import cmd
 import re
-import models
+import json
 from shlex import split
 from models.base_model import BaseModel
 from models.user import User
@@ -13,7 +13,6 @@ from models.review import Review
 from models.place import Place
 from models.amenity import Amenity
 from models import storage
-
 
 class HBNBCommand(cmd.Cmd):
     """A command that interprete class thta inherit from cmd.Cmd"""
