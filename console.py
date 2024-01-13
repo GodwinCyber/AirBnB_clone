@@ -70,6 +70,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances based or not on the class name."""
         args = arg.split()
         if not args:
+            storage.reload()
             obj_list = [str(obj) for obj in storage.all().values()]
             print(obj_list)
         elif args[0] not in ["BaseModel", "User", "State", "City", "Review",
