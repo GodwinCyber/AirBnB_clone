@@ -82,7 +82,8 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             obj_dict = models.storage.all()
         elif args[0] in classes:
-            obj_dict = {k: v for k, v in models.storage.all().items() if isinstance(v, classes[args[0]])}
+            obj_dict = {k: v for k, v in models.storage.all().items()
+                        if isinstance(v, classes[args[0]])}
         else:
             print("** class doesn't exist **")
             return False
