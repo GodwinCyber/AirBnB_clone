@@ -16,7 +16,7 @@ from models.amenity import Amenity
 from models import storage
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-        "Place": Place, "Review": Review, "State": State, "User": User}
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -28,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         elif arg not in ["BaseModel", "User", "Review", "State", "City",
-                "Place", "Amenity"]:
+                         "Place", "Amenity"]:
             print("** class doesn't exist **")
         else:
             obj = eval(arg)()
@@ -36,12 +36,13 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of an\
+                instance based on the class name and id"""
         args = arg.split()
         if not args:
             print("** class name missing **")
         elif args[0] not in ["BaseModel", "User", "Review", "City", "State",
-                "Place", "Amenity"]:
+                             "Place", "Amenity"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -54,7 +55,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id (save the change into the JSON file)."""
+        """Deletes an instance based on the class name and\
+                id (save the change into the JSON file)."""
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -72,8 +74,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name."""
-        args =shlex.split(arg)
+        """Prints all string representation of all\
+                instances based or not on the class name."""
+        args = shlex.split(arg)
         obj_list = []
 
         if len(args) == 0:
@@ -93,12 +96,13 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id
-        by adding or updating attribute (save the change into the JSON file)."""
+        by adding or updating attribute (save the change into the JSON file).
+        """
         args = arg.split()
         if not args:
             print("** class name missing **")
         elif args[0] not in ["BaseModel", "User", "City", "State", "Amenity",
-                "Review", "Place"]:
+                             "Review", "Place"]:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -117,15 +121,14 @@ class HBNBCommand(cmd.Cmd):
                         try:
                             attr_type = type(getattr(obj, attr_name))
                             attr_value = attr_type(attr_value)
-                        except:
+                        except Exception e:
                             pass
                         setattr(obj, attr_name, attr_value)
                         obj.save()
             else:
                 print("** no instance is found **")
 
-
-    def do_quit(self, arg):
+    def doquit(self, arg):
         """Quit command to exit the program"""
         return True
 
@@ -149,7 +152,8 @@ class HBNBCommand(cmd.Cmd):
 
     def help_show(self):
         """Show the help message for the show command"""
-        print("Print the string representation of an instance based on the class name and id")
+        print("Print the string representation of an\
+                instance based on the class name and id")
         print("Usage: show <class name> <id>")
 
     def help_destroy(self):
@@ -159,17 +163,21 @@ class HBNBCommand(cmd.Cmd):
 
     def help_all(self):
         """Show the help message for the all command"""
-        print("Print all string representation of all instances based or not on the class name")
+        print("Print all string representation of all\
+                instances based or not on the class name")
         print("Usage: all <class name> (optional)")
 
     def help_updat(self):
         """Show the help message for the update command"""
-        print("Update an instance based on the class name and id by adding or updating attribute")
-        print("Usage: update <class name> <id> <attribute name> \"<attribute value>\"")
+        print("Update an instance based on the class name and\
+                id by adding or updating attribute")
+        print("Usage: update <class name> <id> <attribute\
+                name> \"<attribute value>\"")
 
-    def help_EOF(self):
-        """show the help mesaage for EOF command"""
+        def help_EOF(self):
+            """show the help mesaage for EOF command"""
         print("EOF command to exit the program")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
