@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
                         try:
                             attr_type = type(getattr(obj, attr_name))
                             attr_value = attr_type(attr_value)
-                        except Exception e:
+                        except Exception as e:
                             pass
                         setattr(obj, attr_name, attr_value)
                         obj.save()
