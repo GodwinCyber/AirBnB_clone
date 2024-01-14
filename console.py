@@ -71,6 +71,39 @@ Display string representations of all instances of a given class.
                     obj.dict[k] = v
         storage.save()
 
+    def help_quit(self):
+        """Show the help message for the quit command"""
+        print("Quit command to exit the program")
+
+    def help_create(self):
+        """Show the help message for the create command"""
+        print("Create a new instance of BaseModel, save it and print the id")
+        print("Usage: create <class name>")
+
+    def help_show(self):
+        """Show the help message for the show command"""
+        print("Print the string representation of an instance based on the class name and id")
+        print("Usage: show <class name> <id>")
+
+    def help_destroy(self):
+        """Show the help message for the destroy command"""
+        print("Delete an instance based on the class name and id")
+        print("Usage: destroy <class name> <id>")
+
+    def help_all(self):
+        """Show the help message for the all command"""
+        print("Print all string representation of all instances based or not on the class name")
+        print("Usage: all <class name> (optional)")
+
+    def help_updat(self):
+        """Show the help message for the update command"""
+        print("Update an instance based on the class name and id by adding or updating attribute")
+        print("Usage: update <class name> <id> <attribute name> \"<attribute value>\"")
+    
+    def help_EOF(self):
+        """show the help mesaage for EOF command"""
+        print("EOF command to exit the program")
+
 
 if name == "main":
     HBNBCommand().cmdloop()
