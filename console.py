@@ -3,7 +3,8 @@
 import cmd
 import re
 import json
-from shlex import split
+import shlex
+import models
 from models.base_model import BaseModel
 from models.user import User
 from models.engine.file_storage import FileStorage
@@ -13,6 +14,9 @@ from models.review import Review
 from models.place import Place
 from models.amenity import Amenity
 from models import storage
+
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+        "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -51,35 +55,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id (save the change into the JSON file)."""
-        args = arg.split()
-        if not args:
+        args = shlex.split(arg)
+        if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User", "City", "Amenity", "Review",
-                "Place", "State"]:
-            print("** class doesn't exist **")
-        elif len(args) == 1:
-            print("** instance id missing **")
-        key = args[0] + "." + args[1]
-        obj = storage.all().pop(key, None)
-        if obj:
-            storage.save()
+        elif args[0] in classes:
+            if len(args) > 1:
+                key = args[0] + "." + args[1]
+                if key in models.storage.all():
+                    models.storage.all().pop(key)
+                    models.storage.save()
+                else:
+                    print("** no instance found **")
+            else:
+                print("** instance id missing **")
         else:
-            print("** no insatnce found **")
+            print("** class doesn't exist **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances based or not on the class name."""
-        args = arg.split()
-        if not args:
-            storage.reload()
-            obj_list = [str(obj) for obj in storage.all().values()]
-            print(obj_list)
-        elif args[0] not in ["BaseModel", "User", "State", "City", "Review",
-                "Amenity", "Place"]:
-            print("** class doesn't exist **")
+        args =shlex.split(arg)
+        obj_list = []
+
+        if len(args) == 0:
+            obj_dict = models.storage.all()
+        elif args[0] in classes:
+            obj_dict = models.storage.all()
         else:
-            obj_cls = obj.__class__.__name__
-            obj_list = [str(obj) for obj in storage.all().values() if obj_cls == args[0]]
-            print(obj_list)
+            print("** class doesn't exist **")
+            return False
+
+        for key in obj_dict:
+            obj_list.append(str(obj_dict[key]))
+
+        print("[", end="")
+        print(", ".join(obj_list), end="")
+        print("]")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id
