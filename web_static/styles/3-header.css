@@ -1,0 +1,14 @@
+header
+{
+    color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px #CCCCCC;
+}
+.logo
+{
+    background: url("../images/logo.ng") no-repeat center;
+    height: 60px;
+    width: 142px;
+    padding-left: 20px;
+}
